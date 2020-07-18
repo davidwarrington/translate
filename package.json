@@ -6,6 +6,7 @@
   "author": "davidwarrington_strawberry <david.warrington@strawberry.co.uk>",
   "license": "MIT",
   "scripts": {
+    "prebuild": "rimraf ./dist",
     "build": "rollup -c",
     "lint": "eslint . --ext .js",
     "test": "jest"
@@ -18,6 +19,7 @@
     "@strawberrydigital/eslint-config": "^1.0.0",
     "eslint": "^7.4.0",
     "jest": "^26.1.0",
+    "rimraf": "^3.0.2",
     "rollup": "^2.21.0"
   }
 }
