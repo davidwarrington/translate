@@ -13,6 +13,9 @@ window.translations = {
             page_x_of_y: 'Page {{ current }} of {{ total }}',
         },
     },
+    checkout: {
+        invalid_delivery_method: '%{method} is not a valid delivery method',
+    },
 };
 
 describe(translate, () => {
@@ -37,9 +40,10 @@ describe(translate, () => {
     });
 
     it.each`
-        key                                    | variables                    | expectedResult
-        ${'product.price'}                     | ${{ money: 12 }}             | ${'£12'}
-        ${'collection.pagination.page_x_of_y'} | ${{ current: 2, total: 16 }} | ${'Page 2 of 16'}
+        key                                    | variables                          | expectedResult
+        ${'product.price'}                     | ${{ money: 12 }}                   | ${'£12'}
+        ${'collection.pagination.page_x_of_y'} | ${{ current: 2, total: 16 }}       | ${'Page 2 of 16'}
+        ${'checkout.invalid_delivery_method'}  | ${{ method: 'Next Day Delivery' }} | ${'Next Day Delivery is not a valid delivery method'}
     `(
         `Translates $key to $expectedResult when provided with $variables`,
         ({ key, variables, expectedResult }) => {

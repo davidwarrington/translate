@@ -19,7 +19,7 @@ function translate(translationPath, variables = {}) {
     const transformedTranslation = Object.entries(variables).reduce(
         (translation, [key, value]) =>
             translation.replace(
-                new RegExp(`({{ ?${key} ?}}|%{ ?${key} ?})`),
+                new RegExp(`({{\\s*${key}\\s*}}|%{${key}})`),
                 value
             ),
         translationFromDictionary
