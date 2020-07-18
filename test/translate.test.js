@@ -10,18 +10,22 @@ window.translations = {
     },
     collection: {
         pagination: {
-            page_x_of_y: 'Page {{ current }} of {{ total }}'
-        }
-    }
+            page_x_of_y: 'Page {{ current }} of {{ total }}',
+        },
+    },
 };
 
 describe(translate, () => {
     it('Throws an error if translation does not exist', () => {
-        expect(() => translate('products')).toThrow('Translation does not exist.');
+        expect(() => translate('products')).toThrow(
+            'Translation does not exist.'
+        );
     });
 
     it('Throws an error if it does not resolve to a string', () => {
-        expect(() => translate('product')).toThrow('Translation does not exist.');
+        expect(() => translate('product')).toThrow(
+            'Translation does not exist.'
+        );
     });
 
     it.each`
@@ -36,7 +40,10 @@ describe(translate, () => {
         key                                    | variables                    | expectedResult
         ${'product.price'}                     | ${{ money: 12 }}             | ${'£12'}
         ${'collection.pagination.page_x_of_y'} | ${{ current: 2, total: 16 }} | ${'Page 2 of 16'}
-    `(`Translates $key to $expectedResult when provided with $variables`, ({ key, variables, expectedResult }) => {
-        expect(translate(key, variables)).toBe(expectedResult);
-    });
+    `(
+        `Translates $key to $expectedResult when provided with $variables`,
+        ({ key, variables, expectedResult }) => {
+            expect(translate(key, variables)).toBe(expectedResult);
+        }
+    );
 });
