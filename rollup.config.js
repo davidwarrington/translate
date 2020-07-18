@@ -1,5 +1,8 @@
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
+
+const isProduction = !process.env.ROLLUP_WATCH;
 
 export default {
     input: './src/translate.js',
@@ -8,5 +11,9 @@ export default {
         format,
         name: format === 'umd' ? 'translate' : null,
     })),
-    plugins: [resolve(), babel({ babelHelpers: 'bundled' })],
+    plugins: [
+        resolve(),
+        babel({ babelHelpers: 'bundled' }),
+        isProduction && terser(),
+    ],
 };
