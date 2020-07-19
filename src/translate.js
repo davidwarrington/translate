@@ -1,19 +1,30 @@
-function translate(translationPath, variables = {}) {
-    const dictionary = window.translations;
-    const errorMessage = 'Translation does not exist.';
+const translate = source => (translationPath, variables = {}) => {
+    const errors = {
+        incorrectSourceType: 'Source must be an object.',
+        noSource: 'Source has not been set.',
+        noTranslation: 'Translation does not exist.',
+    };
 
-    const translationFromDictionary = translationPath
+    if (!source) {
+        throw new Error(errors.noSource);
+    }
+
+    if (typeof source !== 'object') {
+        throw new Error(errors.incorrectSourceType);
+    }
+
+    const translationFromSource = translationPath
         .split('.')
-        .reduce((acc, curr) => {
-            if (!acc[curr]) {
-                throw new Error(errorMessage);
+        .reduce((filteredSource, key) => {
+            if (!filteredSource[key]) {
+                throw new Error(errors.noTranslation);
             }
 
-            return acc[curr];
-        }, dictionary);
+            return filteredSource[key];
+        }, source);
 
-    if (typeof translationFromDictionary !== 'string') {
-        throw new Error(errorMessage);
+    if (typeof translationFromSource !== 'string') {
+        throw new Error(errors.noTranslation);
     }
 
     const transformedTranslation = Object.entries(variables).reduce(
@@ -22,10 +33,10 @@ function translate(translationPath, variables = {}) {
                 new RegExp(`({{\\s*${key}\\s*}}|%{${key}})`),
                 value
             ),
-        translationFromDictionary
+        translationFromSource
     );
 
     return transformedTranslation;
-}
+};
 
 export default translate;

@@ -1,6 +1,6 @@
 # translate.js
 
-A plugin for using Shopify translations within JavaScript.
+A library for translating strings with JS. translate.js is designed to work with Shopify translations, but is not tied to the Shopify environment.
 
 ## Usage
 
@@ -31,17 +31,21 @@ window.translations = {
 </script>
 ```
 
-Import the library and call `translate` with strings that match the JSON structure of `window.translations`:
+Create a variable with your translation registry applied to the library, it can then be called with strings that match the JSON structure of `window.translations`:
 ```js
 import translate from 'translate.js';
 
-translate('add_to_cart');
-translate('product.sale.on_sale');
+const translator = translate(window.translations);
+
+translator('add_to_cart');
+translator('product.sale.on_sale');
 ```
 
 You can also pass variables into the function like so:
 ```js
 import translate from 'translate.js';
 
-translate('collection.pagination.page_x_of_y', { current: 2, total: 16 });
+const translator = translate(window.translations);
+
+translator('collection.pagination.page_x_of_y', { current: 2, total: 16 });
 ```
