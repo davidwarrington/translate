@@ -1,15 +1,32 @@
 {
   "name": "translate.js",
   "version": "1.0.0",
-  "main": "index.js",
-  "types": "./types/translate.d.ts",
-  "repository": "git@github.com:davidwarrington/translate.js",
-  "author": "davidwarrington_strawberry <david.warrington@strawberry.co.uk>",
+  "main": "dist/translate.cjs.js",
+  "module": "dist/bundle.esm.js",
+  "sideEffects": false,
+  "types": "types/translate.d.ts",
+  "author": {
+    "name": "David Warrington",
+    "url": "https://github.com/davidwarrington"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidwarrington/translate.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/davidwarrington/translate.js/issues"
+  },
+  "homepage": "https://github.com/davidwarrington/translate.js#readme",
   "license": "MIT",
+  "files": [
+    "dist",
+    "types"
+  ],
   "scripts": {
     "prebuild": "rimraf ./dist",
     "build": "rollup -c",
     "lint": "eslint . --ext .js",
+    "prepublishOnly": "yarn build",
     "test": "jest"
   },
   "devDependencies": {
