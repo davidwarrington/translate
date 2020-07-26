@@ -6,7 +6,7 @@ A library for translating strings with JS. translate.js is designed to work with
 
 Create a variable with your translation registry applied to the library, it can then be called with strings that match the JSON structure of the registry:
 ```js
-import translate from 'translate.js';
+import { translate } from 'translate.js';
 
 const translations = {
     add_to_cart: 'Add to Cart',
@@ -64,7 +64,7 @@ window.translations = {
 
 Then use `window.translations` as your registry:
 ```js
-import translate from 'translate.js';
+import { translate } from 'translate.js';
 
 const translator = translate(window.translations);
 

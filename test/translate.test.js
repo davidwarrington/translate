@@ -1,22 +1,7 @@
-import translate from '../src/translate';
+import translations from './fixtures/translations';
+import { translate } from '../src/translate';
 
-window.translations = {
-    add_to_cart: 'Add to Cart',
-    product: {
-        price: '£{{ money }}',
-        sale: {
-            on_sale: 'On Sale',
-        },
-    },
-    collection: {
-        pagination: {
-            page_x_of_y: 'Page {{ current }} of {{ total }}',
-        },
-    },
-    checkout: {
-        invalid_delivery_method: '%{method} is not a valid delivery method',
-    },
-};
+window.translations = translations;
 
 const translator = translate(window.translations);
 
@@ -67,5 +52,13 @@ describe(translate, () => {
                 expect(translator(key, variables)).toBe(expectedResult);
             }
         );
+
+        it('Supports alternative delimiters', () => {
+            expect(
+                translate(window.translations, {
+                    delimiters: [['<<-', '->>']],
+                })('checkout.percent_discount', { percent: 12 })
+            ).toBe('12% off');
+        });
     });
 });

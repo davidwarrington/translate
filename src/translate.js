@@ -1,4 +1,28 @@
-const translate = source => (translationPath, variables = {}) => {
+export const renderString = (
+    renderTarget,
+    variables,
+    options = {
+        delimiters: [
+            ['{{\\s*', '\\s*}}'],
+            ['%{', '}'],
+        ],
+    }
+) => {
+    return Object.entries(variables).reduce((translation, [key, value]) => {
+        const replacePattern = options.delimiters
+            .map(([start, end]) => {
+                return `${start}${key}${end}`;
+            })
+            .join('|');
+
+        return translation.replace(new RegExp(replacePattern, 'g'), value);
+    }, renderTarget);
+};
+
+export const translate = (source, options) => (
+    translationPath,
+    variables = {}
+) => {
     const errors = {
         incorrectSourceType: 'Source must be an object.',
         noSource: 'Source has not been set.',
@@ -27,16 +51,11 @@ const translate = source => (translationPath, variables = {}) => {
         throw new Error(errors.noTranslation);
     }
 
-    const transformedTranslation = Object.entries(variables).reduce(
-        (translation, [key, value]) =>
-            translation.replace(
-                new RegExp(`({{\\s*${key}\\s*}}|%{${key}})`, 'g'),
-                value
-            ),
-        translationFromSource
+    const transformedTranslation = renderString(
+        translationFromSource,
+        variables,
+        options
     );
 
     return transformedTranslation;
 };
-
-export default translate;
