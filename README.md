@@ -95,3 +95,28 @@ renderString(
     { delimiters: [['<<- ', ' ->>'], ['@[',']']] },
 );
 ```
+
+### Registering translate as a Vue filter
+
+`translate` can be used as a Vue filter in order to mimic how it's written in Liquid. To do so, try this:
+
+```js
+import Vue from 'vue';
+import { translate } from 'translate.js';
+
+Vue.filter('t', translate(window.translations));
+```
+
+Then you can use it in your Vue templates like so:
+
+```html
+<template>
+    <p>
+        {{ 'product.money' | t({ money: 12 }) }}
+    </p>
+
+    <button>
+        {{ 'add_to_cart' | t }}
+    </button>
+</template>
+```
