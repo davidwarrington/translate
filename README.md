@@ -1,6 +1,18 @@
 # translate.js
 
-A library for translating strings with JS. translate.js is designed to work with Shopify translations, but is not tied to the Shopify environment.
+translate.js allows strings nested inside JSON to be retrieved from a source object and rendered with variables. It is designed to provide a consistent method for using translation strings within JS bundles and to replicate the Shopify Liquid `t` filter in Vue components. It is not tied to the Shopify environment, or to the browser.
+
+In the example below, `'cart.empty_warning'` would resolve to "Your cart is empty".
+```js
+const translator = translate({
+    add_to_cart: 'Add to Cart',
+    cart: {
+        empty_warning: 'Your cart is empty',
+    },
+});
+
+translator('cart.empty_warning');
+```
 
 ## Usage
 
