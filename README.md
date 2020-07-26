@@ -70,3 +70,28 @@ const translator = translate(window.translations);
 
 translator('add_to_cart');
 ```
+
+### Using custom delimiters
+
+By default translate.js will replace `{{` & `}}` and `%{` & `}` delimiter pairs in your translations, as those are transformed by Shopify Liquid. If you wish to use alternatives they can be passed in via `options`.
+```js
+translate(translations, { delimiters: [['<--', '-->']] });
+```
+
+### Rendering individual strings
+
+If for any reason it doesn't make sense to create a translations object; for example, you only need to transform a single string once, you can import the `renderString` utility instead, and use it like so:
+```js
+import { renderString } from 'translate.js';
+
+renderString('Results for: {{ search_terms }}', { search_terms: 'Skateboard Deck' });
+```
+
+You can replace the default delimiters with the third argument too.
+```js
+renderString(
+    'Contact us via email (<<- email ->>), social media or by phone (@[phone])',
+    { email: 'support@shop.com' },
+    { delimiters: [['<<- ', ' ->>'], ['@[',']']] },
+);
+```
