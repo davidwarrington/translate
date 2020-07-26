@@ -2,6 +2,7 @@
   "name": "translate.js",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "./types/translate.d.ts",
   "repository": "git@github.com:davidwarrington/translate.js",
   "author": "davidwarrington_strawberry <david.warrington@strawberry.co.uk>",
   "license": "MIT",
