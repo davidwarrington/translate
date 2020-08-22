@@ -1,6 +1,6 @@
-# translate.js
+# @davidwarrington/translate
 
-translate.js allows strings nested inside JSON to be retrieved from a source object and rendered with variables. It is designed to provide a consistent method for using translation strings within JS bundles and to replicate the Shopify Liquid `t` filter in Vue components. It is not tied to the Shopify environment, or to the browser.
+translate allows strings nested inside JSON to be retrieved from a source object and rendered with variables. It is designed to provide a consistent method for using translation strings within JS bundles and to replicate the Shopify Liquid `t` filter in Vue components. It is not tied to the Shopify environment, or to the browser.
 
 In the example below, `'cart.empty_warning'` would resolve to "Your cart is empty".
 ```js
@@ -14,11 +14,23 @@ const translator = translate({
 translator('cart.empty_warning');
 ```
 
+## Installation
+
+Install using yarn:
+```shell
+$ yarn add @davidwarrington/translate
+```
+
+Or npm:
+```shell
+$ npm install @davidwarrington/translate
+```
+
 ## Usage
 
 Create a variable with your translation registry applied to the library, it can then be called with strings that match the JSON structure of the registry:
 ```js
-import { translate } from 'translate.js';
+import { translate } from '@davidwarrington/translate';
 
 const translations = {
     add_to_cart: 'Add to Cart',
@@ -76,7 +88,7 @@ window.translations = {
 
 Then use `window.translations` as your registry:
 ```js
-import { translate } from 'translate.js';
+import { translate } from '@davidwarrington/translate';
 
 const translator = translate(window.translations);
 
@@ -85,7 +97,7 @@ translator('add_to_cart');
 
 ### Using custom delimiters
 
-By default translate.js will replace `{{` & `}}` and `%{` & `}` delimiter pairs in your translations, as those are transformed by Shopify Liquid. If you wish to use alternatives they can be passed in via `options`.
+By default translate will replace `{{` & `}}` and `%{` & `}` delimiter pairs in your translations, as those are transformed by Shopify Liquid. If you wish to use alternatives they can be passed in via `options`.
 ```js
 translate(translations, { delimiters: [['<--', '-->']] });
 ```
@@ -94,7 +106,7 @@ translate(translations, { delimiters: [['<--', '-->']] });
 
 If for any reason it doesn't make sense to create a translations object; for example, you only need to transform a single string once, you can import the `renderString` utility instead, and use it like so:
 ```js
-import { renderString } from 'translate.js';
+import { renderString } from '@davidwarrington/translate';
 
 renderString('Results for: {{ search_terms }}', { search_terms: 'Skateboard Deck' });
 ```
@@ -114,7 +126,7 @@ renderString(
 
 ```js
 import Vue from 'vue';
-import { translate } from 'translate.js';
+import { translate } from '@davidwarrington/translate';
 
 Vue.filter('t', translate(window.translations));
 ```

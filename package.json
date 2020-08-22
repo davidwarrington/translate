@@ -1,5 +1,5 @@
 {
-  "name": "translate.js",
+  "name": "@davidwarrington/translate",
   "version": "1.0.0",
   "main": "dist/translate.cjs.js",
   "module": "dist/bundle.esm.js",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidwarrington/translate.js.git"
+    "url": "git+https://github.com/davidwarrington/translate.git"
   },
   "bugs": {
-    "url": "https://github.com/davidwarrington/translate.js/issues"
+    "url": "https://github.com/davidwarrington/translate/issues"
   },
-  "homepage": "https://github.com/davidwarrington/translate.js#readme",
+  "homepage": "https://github.com/davidwarrington/translate#readme",
   "license": "MIT",
   "files": [
     "dist",
