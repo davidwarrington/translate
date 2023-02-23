@@ -1,5 +1,1 @@
-module.exports = {
-    "arrowParens": "avoid",
-    "singleQuote": true,
-    "tabWidth": 4
-}
+module.exports = require('@davidwarrington/prettier-config');
