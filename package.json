@@ -1,10 +1,12 @@
 {
   "name": "@davidwarrington/translate",
+  "private": true,
   "version": "1.0.0",
-  "main": "dist/translate.cjs.js",
-  "module": "dist/bundle.esm.js",
+  "type": "module",
+  "main": "./dist/translate.umd.cjs",
+  "module": "./dist/translate.js",
   "sideEffects": false,
-  "types": "types/translate.d.ts",
+  "types": "./index.d.ts",
   "author": {
     "name": "David Warrington",
     "url": "https://github.com/davidwarrington"
@@ -20,26 +22,26 @@
   "license": "MIT",
   "files": [
     "dist",
-    "types"
+    "index.d.ts"
   ],
+  "exports": {
+    "types": "./index.d.ts",
+    "import": "./dist/translate.js",
+    "require": "./dist/translate.umd.cjs"
+  },
   "scripts": {
-    "prebuild": "rimraf ./dist",
-    "build": "rollup -c",
-    "lint": "eslint . --ext .js",
-    "prepublishOnly": "yarn build",
-    "test": "jest"
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "lint": "eslint ."
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
     "@davidwarrington/prettier-config": "^1.0.0",
-    "@rollup/plugin-babel": "^5.1.0",
-    "@rollup/plugin-node-resolve": "^8.4.0",
-    "@strawberrydigital/eslint-config": "^1.0.0",
-    "eslint": "^7.4.0",
-    "jest": "^26.1.0",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.21.0",
-    "rollup-plugin-terser": "^6.1.0"
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4"
   }
 }
