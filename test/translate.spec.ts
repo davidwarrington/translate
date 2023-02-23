@@ -1,11 +1,11 @@
+import { describe, expect, it } from 'vitest';
+
 import translations from './fixtures/translations';
 import { translate } from '../src/translate';
 
-window.translations = translations;
+const translator = translate(translations);
 
-const translator = translate(window.translations);
-
-describe(translate, () => {
+describe('translate', () => {
   describe('Errors', () => {
     it('Throws an error if not provided with translations to use', () => {
       expect(() => translate()('add_to_cart')).toThrow(
@@ -55,7 +55,7 @@ describe(translate, () => {
 
     it('Supports alternative delimiters', () => {
       expect(
-        translate(window.translations, {
+        translate(translations, {
           delimiters: [['<<-', '->>']],
         })('checkout.percent_discount', { percent: 12 })
       ).toBe('12% off');
