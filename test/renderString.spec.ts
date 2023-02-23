@@ -1,7 +1,9 @@
+import { describe, it, expect } from 'vitest';
+
 import translations from './fixtures/translations';
 import { renderString } from '../src/translate';
 
-describe(renderString, () => {
+describe('renderString', () => {
   it.each`
     string                                            | variables                    | expectedResult
     ${translations.add_to_cart}                       | ${{}}                        | ${'Add to Cart'}
