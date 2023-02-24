@@ -1,19 +1,21 @@
 import { describe, expect, it } from 'vitest';
 
 import translations from './fixtures/translations';
-import { translate } from '../src/translate';
+import { translate } from '../lib/main';
 
 const translator = translate(translations);
 
 describe('translate', () => {
   describe('Errors', () => {
     it('Throws an error if not provided with translations to use', () => {
+      // @ts-ignore
       expect(() => translate()('add_to_cart')).toThrow(
         'Source has not been set.'
       );
     });
 
     it('Throws an error if not translation registry is not an object', () => {
+      // @ts-ignore
       expect(() => translate('translations')('add_to_cart')).toThrow(
         'Source must be an object.'
       );
