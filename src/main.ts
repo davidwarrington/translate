@@ -10,7 +10,7 @@ interface TranslateSource {
 
 type TranslateVariables = Record<string, unknown>;
 
-export const renderString = (
+export function renderString(
   renderTarget: string,
   variables: TranslateVariables,
   {
@@ -19,7 +19,7 @@ export const renderString = (
       ['%{', '}'],
     ],
   }: TranslateOptions = {}
-) => {
+) {
   return Object.entries(variables).reduce((translation, [key, value]) => {
     const replacePattern = delimiters
       .map(([start, end]) => {
@@ -31,11 +31,13 @@ export const renderString = (
 
     return translation.replace(new RegExp(replacePattern, 'g'), replaceValue);
   }, renderTarget);
-};
+}
 
-export const translate =
-  (source: TranslateSource, options?: TranslateOptions) =>
-  (translationPath: string, variables: TranslateVariables = {}) => {
+export function translate(source: TranslateSource, options?: TranslateOptions) {
+  return function (
+    translationPath: string,
+    variables: TranslateVariables = {}
+  ) {
     const errors = {
       incorrectSourceType: 'Source must be an object.',
       noSource: 'Source has not been set.',
@@ -72,3 +74,4 @@ export const translate =
 
     return renderString(translationFromSource, variables, options);
   };
+}
