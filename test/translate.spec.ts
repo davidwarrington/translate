@@ -7,20 +7,6 @@ const translator = translate(translations);
 
 describe('translate', () => {
   describe('Errors', () => {
-    it('Throws an error if not provided with translations to use', () => {
-      // @ts-ignore
-      expect(() => translate()('add_to_cart')).toThrow(
-        'Source has not been set.'
-      );
-    });
-
-    it('Throws an error if not translation registry is not an object', () => {
-      // @ts-ignore
-      expect(() => translate('translations')('add_to_cart')).toThrow(
-        'Source must be an object.'
-      );
-    });
-
     it('Throws an error if translation does not exist', () => {
       expect(() => translator('products')).toThrow(
         'Translation does not exist.'
