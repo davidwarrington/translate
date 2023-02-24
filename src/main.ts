@@ -38,38 +38,26 @@ export function translate(source: TranslateSource, options?: TranslateOptions) {
     translationPath: string,
     variables: TranslateVariables = {}
   ) {
-    const errors = {
-      incorrectSourceType: 'Source must be an object.',
-      noSource: 'Source has not been set.',
-      noTranslation: 'Translation does not exist.',
-    };
-
-    if (!source) {
-      throw new Error(errors.noSource);
-    }
-
-    if (typeof source !== 'object') {
-      throw new Error(errors.incorrectSourceType);
-    }
+    const NO_TRANSLATION_ERROR = 'Translation does not exist.';
 
     const translationFromSource = translationPath
       .split('.')
       .reduce((previousValue, key) => {
         if (typeof previousValue === 'string') {
-          throw new Error(errors.noTranslation);
+          throw new Error(NO_TRANSLATION_ERROR);
         }
 
         const value = previousValue[key];
 
         if (!value) {
-          throw new Error(errors.noTranslation);
+          throw new Error(NO_TRANSLATION_ERROR);
         }
 
         return value;
       }, source as TranslateSourceValue);
 
     if (typeof translationFromSource !== 'string') {
-      throw new Error(errors.noTranslation);
+      throw new Error(NO_TRANSLATION_ERROR);
     }
 
     return renderString(translationFromSource, variables, options);
