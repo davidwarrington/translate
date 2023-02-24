@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import translations from './fixtures/translations';
-import { translate } from '../lib/main';
+import { translate } from '../src/main';
 
 const translator = translate(translations);
 
