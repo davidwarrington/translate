@@ -1,23 +1,72 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from '../lib/main'
+interface TranslateOptions {
+  delimiters?: [string, string][];
+}
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+type TranslateSourceValue = TranslateSource | string;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+interface TranslateSource {
+  [key: string]: TranslateSourceValue;
+}
+
+type TranslateVariables = Record<string, unknown>;
+
+export const renderString = (
+  renderTarget: string,
+  variables: TranslateVariables,
+  {
+    delimiters = [
+      ['{{\\s*', '\\s*}}'],
+      ['%{', '}'],
+    ],
+  }: TranslateOptions = {}
+) => {
+  return Object.entries(variables).reduce((translation, [key, value]) => {
+    const replacePattern = delimiters
+      .map(([start, end]) => {
+        return `${start}${key}${end}`;
+      })
+      .join('|');
+
+    return translation.replace(new RegExp(replacePattern, 'g'), value);
+  }, renderTarget);
+};
+
+export const translate =
+  (source: TranslateSource, options?: TranslateOptions) =>
+  (translationPath: string, variables: TranslateVariables = {}) => {
+    const errors = {
+      incorrectSourceType: 'Source must be an object.',
+      noSource: 'Source has not been set.',
+      noTranslation: 'Translation does not exist.',
+    };
+
+    if (!source) {
+      throw new Error(errors.noSource);
+    }
+
+    if (typeof source !== 'object') {
+      throw new Error(errors.incorrectSourceType);
+    }
+
+    const translationFromSource = translationPath
+      .split('.')
+      .reduce((previousValue, key) => {
+        if (typeof previousValue === 'string') {
+          throw new Error(errors.noTranslation);
+        }
+
+        const value = previousValue[key];
+
+        if (!value) {
+          throw new Error(errors.noTranslation);
+        }
+
+        return value;
+      }, source as TranslateSourceValue);
+
+    if (typeof translationFromSource !== 'string') {
+      throw new Error(errors.noTranslation);
+    }
+
+    return renderString(translationFromSource, variables, options);
+  };
