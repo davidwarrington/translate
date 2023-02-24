@@ -27,7 +27,9 @@ export const renderString = (
       })
       .join('|');
 
-    return translation.replace(new RegExp(replacePattern, 'g'), value);
+    const replaceValue = typeof value === 'function' ? value() : value;
+
+    return translation.replace(new RegExp(replacePattern, 'g'), replaceValue);
   }, renderTarget);
 };
 
