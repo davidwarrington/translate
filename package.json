@@ -6,7 +6,7 @@
   "main": "./dist/translate.umd.cjs",
   "module": "./dist/translate.js",
   "sideEffects": false,
-  "types": "./index.d.ts",
+  "types": "./dist/translate.d.ts",
   "author": {
     "name": "David Warrington",
     "url": "https://github.com/davidwarrington"
@@ -21,11 +21,10 @@
   "homepage": "https://github.com/davidwarrington/translate#readme",
   "license": "MIT",
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "exports": {
-    "types": "./index.d.ts",
+    "types": "./dist/translate.d.ts",
     "import": "./dist/translate.js",
     "require": "./dist/translate.umd.cjs"
   },
@@ -44,6 +43,7 @@
     "prettier": "^2.8.4",
     "typescript": "^4.9.4",
     "vite": "^4.0.4",
+    "vite-plugin-dts": "^2.0.2",
     "vitest": "^0.28.5"
   }
 }

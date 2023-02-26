@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import translations from './fixtures/translations';
-import { renderString } from '../src/main';
+import { renderString } from '../src/translate';
 
 describe('renderString', () => {
   it.each`
