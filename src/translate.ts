@@ -43,17 +43,14 @@ export function translate(source: TranslateSource, options?: TranslateOptions) {
     const translationFromSource = translationPath
       .split('.')
       .reduce((previousValue, key) => {
-        if (typeof previousValue === 'string') {
+        if (
+          typeof previousValue === 'string' ||
+          typeof previousValue === 'undefined'
+        ) {
           throw new Error(NO_TRANSLATION_ERROR);
         }
 
-        const value = previousValue[key];
-
-        if (!value) {
-          throw new Error(NO_TRANSLATION_ERROR);
-        }
-
-        return value;
+        return previousValue[key];
       }, source as TranslateSourceValue);
 
     if (typeof translationFromSource !== 'string') {
