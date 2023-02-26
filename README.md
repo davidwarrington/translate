@@ -17,8 +17,6 @@ translator('cart.empty_warning');
 
 ## Installation
 
-Install using yarn:
-
 ```bash
 pnpm add @davidwarrington/translate
 # or with yarn
