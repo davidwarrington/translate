@@ -7,21 +7,21 @@ const translator = translate(translations);
 
 describe('translate', () => {
   describe('Errors', () => {
-    it('Throws an error if translation does not exist', () => {
+    it('Throws an error if first subpath does not exist', () => {
       expect(() => translator('products')).toThrow(
-        'Translation does not exist.'
+        /^"products" is not a valid translation path\.$/
       );
     });
 
-    it('Throws an error if translation does not exist', () => {
+    it('Throws an error if any subpath does not exist', () => {
       expect(() => translator('collection.filters.filter_name')).toThrow(
-        'Translation does not exist.'
+        /^"collection.filters.filter_name" is not a valid translation path\.$/
       );
     });
 
-    it('Throws an error if it does not resolve to a string', () => {
+    it('Throws an error if path does not resolve to a string', () => {
       expect(() => translator('product')).toThrow(
-        'Translation does not exist.'
+        /^"product" is not a valid translation path\.$/
       );
     });
   });

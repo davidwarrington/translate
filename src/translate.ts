@@ -38,7 +38,8 @@ export function translate(source: TranslateSource, options?: TranslateOptions) {
     translationPath: string,
     variables: TranslateVariables = {}
   ) {
-    const NO_TRANSLATION_ERROR = 'Translation does not exist.';
+    const NO_TRANSLATION_ERROR =
+      '"{{ path }}" is not a valid translation path.';
 
     const translationFromSource = translationPath
       .split('.')
@@ -47,14 +48,18 @@ export function translate(source: TranslateSource, options?: TranslateOptions) {
           typeof previousValue === 'string' ||
           typeof previousValue === 'undefined'
         ) {
-          throw new Error(NO_TRANSLATION_ERROR);
+          throw new Error(
+            renderString(NO_TRANSLATION_ERROR, { path: translationPath })
+          );
         }
 
         return previousValue[key];
       }, source as TranslateSourceValue);
 
     if (typeof translationFromSource !== 'string') {
-      throw new Error(NO_TRANSLATION_ERROR);
+      throw new Error(
+        renderString(NO_TRANSLATION_ERROR, { path: translationPath })
+      );
     }
 
     return renderString(translationFromSource, variables, options);
