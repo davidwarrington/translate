@@ -13,6 +13,12 @@ describe('translate', () => {
       );
     });
 
+    it('Throws an error if translation does not exist', () => {
+      expect(() => translator('collection.filters.filter_name')).toThrow(
+        'Translation does not exist.'
+      );
+    });
+
     it('Throws an error if it does not resolve to a string', () => {
       expect(() => translator('product')).toThrow(
         'Translation does not exist.'
