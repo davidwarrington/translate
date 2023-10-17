@@ -152,3 +152,59 @@ Then you can use it in your Vue templates like so:
   <button>{{ 'add_to_cart' | t }}</button>
 </template>
 ```
+
+### TypeScript
+
+`translate` accepts a generic that can be used to provide type safety to your translation keys. If you're passing the translations directly you get this for free.
+
+```ts
+const t = translate({
+  collection: {
+    pagination: {
+      page_x_of_y: 'Page {{ x }} of {{ y }}',
+    },
+  },
+  product: {
+    price: '£{{ price }}',
+  },
+});
+
+t('collection.pagination.page_x_of_y'); // TypeScript knows this is valid
+t('collection.related_collections'); // TypeScript knows this is not valid
+```
+
+If you're not passing the translations directly, for example if you're passing them in via `window.translations`, you can use a generic to help TypeScript.
+
+```ts
+type Translations = {
+  collection: {
+    pagination: {
+      page_x_of_y: string;
+    };
+  };
+  product: {
+    price: string;
+  };
+};
+
+const t = translate<Translations>(window.translations);
+```
+
+If you're using JSDoc you can still benefit from the generic, it's just ~~a little~~ ugly.
+
+```js
+/**
+ * @typedef {object} Translations
+ *
+ * @property {object} collection
+ * @property {object} collection.pagination
+ * @property {string} collection.pagination.page_x_of_y
+ *
+ * @property {object} product
+ * @property {string} product.price
+ */
+
+const t = /** @type {typeof translate<Translations>} */ (translate)(
+  window.translations
+);
+```

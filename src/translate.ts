@@ -10,6 +10,16 @@ interface TranslateSource {
 
 type TranslateVariables = Record<string, unknown>;
 
+/**
+ * @note Credit to Pedro Figueiredo for the original type - [Source](https://dev.to/pffigueiredo/typescript-utility-keyof-nested-object-2pa3).
+ * This implementation has been modified slightly to require that the translation path is complete, e.g `a.b` is not valid if `a.b.c` is.
+ */
+type NestedKeyOf<ObjectType extends object> = {
+  [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
+    ? `${Key}.${NestedKeyOf<ObjectType[Key]>}`
+    : `${Key}`;
+}[keyof ObjectType & (string | number)];
+
 export function renderString(
   renderTarget: string,
   variables: TranslateVariables,
@@ -33,9 +43,12 @@ export function renderString(
   }, renderTarget);
 }
 
-export function translate(source: TranslateSource, options?: TranslateOptions) {
+export function translate<T extends TranslateSource>(
+  source: T,
+  options?: TranslateOptions
+) {
   return function (
-    translationPath: string,
+    translationPath: NestedKeyOf<T>,
     variables: TranslateVariables = {}
   ) {
     const NO_TRANSLATION_ERROR =
